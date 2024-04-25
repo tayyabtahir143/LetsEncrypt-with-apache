@@ -183,77 +183,75 @@ then run the following command to generate the wild card certificate:
 
   * When opting for the DNS challenge to secure a wild-card SSL certificate, you'll have to configure Apache or Nginx settings manually post obtaining the certificates.
   * With the DNS challenge, the "run" command isn't applicable; instead, you're limited to using the "certonly" command.
+  * So we need to create the following 2 files.
 
-sudo dnf install certbot python3-certbot-nginx
-
-
-
-
-
-mkdir -p /usr/share/nginx/cat.test.tayyabtahir.com/public_html
-mkdir -p /usr/share/nginx/dog.test.tayyabtahir.com/public_html
-mkdir -p /usr/share/nginx/cow.test.tayyabtahir.com/public_html
-
-echo "This is Cat." > /usr/share/nginx/cat.test.tayyabtahir.com/public_html/index.html
-echo "This is dog." > /usr/share/nginx/dog.test.tayyabtahir.com/public_html/index.html
-echo "This is Cow." > /usr/share/nginx/cow.test.tayyabtahir.com/public_html/index.html
-
-
-
-mkdir /etc/nginx/sites-available
-vim cat.conf
-server{
-	listen	80;
-	server_name	cat.test.tayyabtahir.com;
-	location /{
-		root /usr/share/nginx/cat.test.tayyabtahir.com/public_html;
-		index	index.html;
-		}
-}
-
-
-
-vim dog.conf
-server{
-	listen	80;
-	server_name	dog.test.tayyabtahir.com;
-	location /{
-		root /usr/share/nginx/dog.test.tayyabtahir.com/public_html;
-		index	index.html;
-		}
-}
-
-
-vim cow.conf
-
-server{
-	listen	80;
-	server_name	cow.test.tayyabtahir.com;
-	location /{
-		root /usr/share/nginx/cow.test.tayyabtahir.com/public_html;
-		index	index.html;
-		}
-}
-
-
-vim /etc/nginx/nginx.conf
-
-#in httpd section
-
-include /etc/nginx/sites-available/*.conf;
-
-
-systemctl restart nginx
+[root@webserver ~]# cat /etc/httpd/conf.d/vhosts.conf 
+    <VirtualHost *:80>
+        #This is main/actual web server.
+        DocumentRoot "/var/www/html"
+        ServerName aus.tayyabtahir.net
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =aus.tayyabtahir.net
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+    </VirtualHost>
+    
+    <VirtualHost *:80>
+        DocumentRoot "/var/www/vhosts/prod"
+        ServerName prod.aus.tayyabtahir.net
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =prod.aus.tayyabtahir.net
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+    </VirtualHost>
+    
+    <VirtualHost *:80>
+      DocumentRoot "/var/www/vhosts/test"
+      ServerName test.aus.tayyabtahir.net
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =test.aus.tayyabtahir.net
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+    </VirtualHost>
+    
+    <VirtualHost *:80>
+      DocumentRoot "/var/www/vhosts/stage"
+      ServerName stage.aus.tayyabtahir.net
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =stage.aus.tayyabtahir.net
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+    </VirtualHost>
 
 
 
 
-certbot run  --nginx --preferred-challenges=http
-
-certbot certonly --dns-cloudflare --dns-cloudflare-credentials .secrets/cloudflare.ini   -d '*.test.ocpexpert.com'
-
-Certificate is saved at: /etc/letsencrypt/live/qrg.ocpexpert.com/fullchain.pem
-Key is saved at:         /etc/letsencrypt/live/qrg.ocpexpert.com/privkey.pem
 
 
+    [root@TayyabsFedora ~]# cat /etc/httpd/conf.d/vhosts-le-ssl.conf
+    <IfModule mod_ssl.c>
+    <VirtualHost *:443>
+      DocumentRoot "/var/www/vhosts/prod"
+      ServerName prod.aus.tayyabtahir.net
+    
+    
+    SSLCertificateFile /etc/letsencrypt/live/aus.tayyabtahir.net/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/aus.tayyabtahir.net/privkey.pem
+    Include /etc/letsencrypt/options-ssl-apache.conf
+    </VirtualHost>
+    <VirtualHost *:443>
+      DocumentRoot "/var/www/vhosts/stage"
+      ServerName stage.aus.tayyabtahir.net
+    
 
+    SSLCertificateFile /etc/letsencrypt/live/aus.tayyabtahir.net/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/aus.tayyabtahir.net/privkey.pem
+    Include /etc/letsencrypt/options-ssl-apache.conf
+    </VirtualHost>
+    <VirtualHost *:443>
+      DocumentRoot "/var/www/vhosts/test"
+      ServerName test.aus.tayyabtahir.net
+    
+    
+    SSLCertificateFile /etc/letsencrypt/live/aus.tayyabtahir.net/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/aus.tayyabtahir.net/privkey.pem
+    Include /etc/letsencrypt/options-ssl-apache.conf
+    </VirtualHost>
+    </IfModule>
+    
