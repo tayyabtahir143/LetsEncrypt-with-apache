@@ -184,7 +184,7 @@ then run the following command to generate the wild card certificate:
     [root@TayyabsFedora ~]#
 
   * When opting for the DNS challenge to secure a wild-card SSL certificate, you'll have to configure Apache or Nginx settings manually post obtaining the certificates.
-  * So we need to create the following 2 files.
+  * So we need to create the following 2 files and we need to mentioned ssl certificates path manually in vhosts-le-ssl.conf file.
 
 
 
