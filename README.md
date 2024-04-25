@@ -69,6 +69,8 @@ Allow port 80 in firewalld and restart the firewalld:
 First do a dry run to see if everything is configured correct:
     certbot certonly  --apache  --dry-run --preferred-challenges=http
 
+Now lets get the ssl certificate from stagging server.
+
 **60 unsuccessful certificate requests per hour are allowed from stagging server.**
 
 **5 unsuccessful certificate request per hour are allowed from production server.**
