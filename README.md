@@ -187,12 +187,11 @@ then run the following command to generate the wild card certificate:
 
 
 
-
     [root@webserver ~]# cat /etc/httpd/conf.d/vhosts.conf
     <VirtualHost *:80>
-         #This is main/actual web server.
-         DocumentRoot "/var/www/html"
-         ServerName aus.tayyabtahir.net
+        #This is main/actual web server.
+        DocumentRoot "/var/www/html"
+        ServerName aus.tayyabtahir.net
     RewriteEngine on
     RewriteCond %{SERVER_NAME} =aus.tayyabtahir.net
     RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
