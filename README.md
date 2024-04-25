@@ -29,7 +29,7 @@ create the virtual hosts:
 
         
     <VirtualHost *:80>
-        # This is main/actual web server. We don't want any certificates for this one. Still configured correctly as a VirtualHost.
+        # This is main web server.
         DocumentRoot "/var/www/html"
         ServerName Aus.tayyabtahir.net
     </VirtualHost>
@@ -101,7 +101,7 @@ run the following command to get the production certificate:
 certbot-apache module can automatically put the certificate in the httpd configuration and virtual host files.
 
     <VirtualHost *:80>
-        # This is main/actual web server. We don't want any certificates for this one. Still configured correctly as a VirtualHost.
+        # This is main web server.
         DocumentRoot "/var/www/html"
         ServerName aus.tayyabtahir.net
     RewriteEngine on
@@ -192,7 +192,7 @@ then run the following command to generate the wild card certificate:
 
 
     <VirtualHost *:80>
-        #This is main/actual web server.
+        #This is main web server.
         DocumentRoot "/var/www/html"
         ServerName aus.tayyabtahir.net
     RewriteEngine on
