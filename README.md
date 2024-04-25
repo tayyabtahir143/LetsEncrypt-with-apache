@@ -147,7 +147,7 @@ To rewnew certificates with cronjob, add the following command in cronjob.
     crontab -e
     34 5 * * * /usr/bin/certbot renew --post-hook "systemctl reload httpd"
 
-#WildCard Certificate with DNS Challenge:
+# WildCard Certificate with DNS Challenge:
 
 
 To get the wildcard certificate using dns challenge, first you need to create the api token from cloudflare.
