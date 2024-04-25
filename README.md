@@ -157,7 +157,7 @@ copy the token into a localfile for example:
 set the following permissions on the file:
 
     chmod 600 .cloudflare.ini
-
+  * With the DNS challenge, the "run" command isn't applicable; instead, you're limited to using the "certonly" command.
 
 then run the following command to generate the wild card certificate:
 
@@ -182,7 +182,6 @@ then run the following command to generate the wild card certificate:
     [root@TayyabsFedora ~]#
 
   * When opting for the DNS challenge to secure a wild-card SSL certificate, you'll have to configure Apache or Nginx settings manually post obtaining the certificates.
-  * With the DNS challenge, the "run" command isn't applicable; instead, you're limited to using the "certonly" command.
   * So we need to create the following 2 files.
 
 
