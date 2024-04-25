@@ -187,7 +187,9 @@ then run the following command to generate the wild card certificate:
 
 
 
-    [root@webserver ~]# cat /etc/httpd/conf.d/vhosts.conf 
+
+
+[root@webserver ~]# cat /etc/httpd/conf.d/vhosts.conf 
     <VirtualHost *:80>
         #This is main/actual web server.
         DocumentRoot "/var/www/html"
@@ -257,3 +259,8 @@ then run the following command to generate the wild card certificate:
     </VirtualHost>
     </IfModule>
     
+
+
+
+
+
