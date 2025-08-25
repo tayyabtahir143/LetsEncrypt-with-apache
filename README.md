@@ -230,7 +230,7 @@ then run the following command to generate the wild card certificate:
 
     [root@TayyabsFedora ~]# cat /etc/httpd/conf.d/vhosts-le-ssl.conf
 
-bash```
+```bash
     <IfModule mod_ssl.c>
     <VirtualHost *:443>
       DocumentRoot "/var/www/vhosts/prod"
