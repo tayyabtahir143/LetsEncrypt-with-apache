@@ -226,13 +226,11 @@ then run the following command to generate the wild card certificate:
     RewriteCond %{SERVER_NAME} =stage.aus.tayyabtahir.net
     RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
     </VirtualHost>
-
-
-
-
-
+```
 
     [root@TayyabsFedora ~]# cat /etc/httpd/conf.d/vhosts-le-ssl.conf
+
+bash```
     <IfModule mod_ssl.c>
     <VirtualHost *:443>
       DocumentRoot "/var/www/vhosts/prod"
@@ -262,9 +260,6 @@ then run the following command to generate the wild card certificate:
     Include /etc/letsencrypt/options-ssl-apache.conf
     </VirtualHost>
     </IfModule>
-    
-
-
-
+```
 
 
